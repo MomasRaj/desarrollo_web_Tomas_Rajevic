@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle aviso - Roland</title>
+  <link rel="stylesheet" type="text/css" href="../css/img.css">
+</head>
+<body>
+  <h1>Detalle del aviso de adopción</h1>
+  <p><strong>Fecha publicación:</strong> 2025-09-01</p>
+  <p><strong>Fecha entrega:</strong> 2025-09-07</p>
+  <p><strong>Comuna:</strong> Santiago</p>
+  <p><strong>Sector:</strong> Santa Lucía</p>
+  <p><strong>Mascotas:</strong> 1 gato, 2 meses</p>
+  <p><strong>Nombre contacto:</strong> Roland</p>
+  <p><strong>Email:</strong> roland@gmail.com</p>
+
+  <h2>Fotos</h2>
+  <img src="../Animales_aviso/animal5/vro.jpg" class="foto-mini" alt="Vro" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal5/meimei.jpg" class="foto-mini" alt="Meimei" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal5/toletole.jpg" class="foto-mini" alt="Toletole" onclick="ampliar(this)">
+
+  <div id="overlay">
+    <img src="../Animales_aviso/animal5/vro.jpg" alt="Foto ampliada">
+    <button onclick="cerrar()">Cerrar</button>
+  </div>
+
+
+  <div>
+    <button id="listado">Volver al listado</button>
+    <button id="volver">Volver a la portada</button>
+  </div>
+<script src="../js/listadoVolver.js"></script>
+<script src="../js/volver.js"></script>
+<script src="../js/ampliar.js"></script>
+</body>
+</html>

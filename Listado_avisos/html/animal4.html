@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle aviso - Angelica</title>
+  <link rel="stylesheet" type="text/css" href="../css/img.css">
+</head>
+<body>
+  <h1>Detalle del aviso de adopción</h1>
+  <p><strong>Fecha publicación:</strong> 2025-08-01</p>
+  <p><strong>Fecha entrega:</strong> 2025-08-05</p>
+  <p><strong>Comuna:</strong> Ñuñoa</p>
+  <p><strong>Sector:</strong> Plaza</p>
+  <p><strong>Mascotas:</strong> 1 perro, 4 meses</p>
+  <p><strong>Nombre contacto:</strong> Spades Slick</p>
+  <p><strong>Email:</strong> SpadeSlick@hotmail.com</p>
+
+  <h2>Fotos</h2>
+  <img src="../Animales_aviso/animal4/Becsprite.webp" alt="Becsprite" class="foto-mini" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal4/Becquerel.webp" alt="Becquerel" class="foto-mini" onclick="ampliar(this)">
+
+  <div id="overlay">
+    <img src="../Animales_aviso/animal4/Becsprite.webp" alt="Foto ampliada">
+    <button onclick="cerrar()">Cerrar</button>
+  </div>
+
+  <div>
+    <button id="listado">Volver al listado</button>
+    <button id="volver">Volver a la portada</button>
+  </div>
+<script src="../js/listadoVolver.js"></script>
+<script src="../js/volver.js"></script>
+<script src="../js/ampliar.js"></script>
+</body>
+</html>

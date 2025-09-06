@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo aviso de adopción</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Agregar nuevo aviso de adopción</h1>
+
+        <form name="myForm" method="post" enctype="multipart/form-data">
+            <button id="volver">Volver</button>
+            <fieldset>
+                <legend>¿Donde?</legend>
+
+                <label for="region">Región</label>
+                <select name="region" id="region" required>
+                    <option value="">Seleccione una región</option>
+                </select>
+
+                <label for="comuna">Comuna</label>
+                <select name="comuna" id="comuna" required>
+                    <option value="">Seleccione una comuna</option>
+                </select>
+
+                <label for="sector">Sector</label>
+                <input type="text" name="sector" id="sector" maxlength="100">
+            </fieldset>
+
+            <fieldset>
+                <legend>¿Contacto de esta publicación?</legend>
+
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" minlength="3" maxlength="200" required>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" maxlength="100" required>
+
+                <label for="numero">Numero de celular</label>
+                <input type="tel" name="numero" id="numero" required>
+
+                <label for="contactar">Contactar por</label>
+                <select name="contactar" id="contactar" required>
+                    <option value="">Seleccionar</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="x">X</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="otra">Otra</option>
+                </select>
+                <div id="contactoo" style="display:none; margin-top:10px;">
+                    <label for="contacto">ID o URL</label>
+                    <input type="text" id="contacto" name="contacto" minlength="4" maxlength="50" placeholder="Ingresa tu ID o URL">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>¿Qué mascota ofrece en adopción?:</legend>
+
+                <label for="tipo">Tipo de animal</label>
+                <select name="tipo" id="tipo" required>
+                    <option value="">Seleccionar</option>
+                    <option value="perro">Perro</option>
+                    <option value="gato">Gato</option>
+                </select>
+
+                <label for="cantidad">Cantidad</label>
+                <input type="number" name="cantidad" id="cantidad" min="1" required>
+
+                <label for="edad">Edad</label>
+                <input type="number" name="edad" id="edad" min="1" required>
+
+                <label for="unidad">Unidad medida edad</label>
+                <select name="unidad" id="unidad" required>
+                    <option value="">Seleccionar</option>
+                    <option value="meses">Meses</option>
+                    <option value="años">Años</option>
+                </select>
+
+                <label for="fecha">Fecha disponible para entrega</label>
+                <input type="datetime-local" name="fecha" id="fecha" required>
+
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion" id="descripcion" rows="10" cols="50" maxlength="300"></textarea>
+
+                <div id="fotos-container">
+                    <div class="foto-item">
+                        <label for="foto1">Foto</label>
+                        <input type="file" name="foto[]" id="foto1" accept="image/*" required>
+                    </div>
+                </div>
+                <button type="button" id="agregar-foto">Agregar otra foto</button>
+            </fieldset>
+
+            <button type="submit" id="submit-btn">Agregar este aviso de adopción</button>
+        </form>
+        <div id="val-box" hidden>
+            <div id="val-msg"></div>
+            <ul id="val-list"></ul>
+        </div>
+    </div>
+<script src="./js/volver.js"></script>
+<script src="./js/region_comuna.js"></script>
+<script src="./js/validation.js"></script>
+<script src="./js/contacto.js"></script>
+<script src="./js/foto.js"></script>
+</body>
+</html>

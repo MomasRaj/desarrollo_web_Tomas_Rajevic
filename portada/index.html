@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+	<title>Form Validation</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Bienvenido al Portal de Adopciones</h1>
+            <p>Adopta un amigo</p>
+        </header>
+        <div id="val-box" hidden>
+            <h2 id="val-msg">Mensaje de validación</h2>
+            <ul id="val-list"></ul>
+        </div>
+        <table>
+            <tr>
+                <th>Fecha publicación</th>
+                <th>Comuna</th>
+                <th>Sector</th>
+                <th>Cantidad Tipo edad</th>
+                <th>Foto</th>
+            </tr>
+            <tr>
+                <td>2025-09-03</td>
+                <td>Providencia</td>
+                <td>Los Leones </td> 
+                <td>1 gato 3 meses</td>
+                <td><img src="Animales/sakamoto.jpg" alt="Sakamoto"></td>
+            </tr>
+            <tr>
+                <td>2025-08-23</td>
+                <td>Lo barnechea</td>
+                <td>Las pataguas</td>
+                <td>1 perro 2 meses</td>
+                <td><img src="Animales/pacifierdog.jpg" alt="dawg"></td>
+            </tr>
+            <tr>
+                <td>2025-08-21</td>
+                <td>Santiago</td>
+                <td>La moneda</td>
+                <td>3 perros 1 mes</td>
+                <td><img src="Animales/Cerberus.webp" alt="Cerberus"></td>
+            </tr>
+            <tr>
+                <td>2025-08-01</td>
+                <td>Ñuñoa</td>
+                <td>Plaza</td>
+                <td>1 perro 4 meses</td>
+                <td><img src="Animales/Becquerel.webp" alt="Becquerel"></td>
+            </tr>
+            <tr>
+                <td>2025-09-01</td>
+                <td>Santiago</td>
+                <td>Santa lucia</td>
+                <td>1 gato 2 meses</td>
+                <td><img src="Animales/vro.jpg" alt=""></td>
+            </tr>
+        </table> 
+        <button id="aviso">Agregar aviso de adopción</button>
+        <button id="listado">Ver listado de adopciones</button>
+        <button id="estadisticas">Estadisticas</button>
+    </div>
+    <script src="./js/aviso.js"></script>
+    <script src="./js/listado.js"></script>
+    <script src="./js/estadisticas.js"></script>
+</body>
+</html>
