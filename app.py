@@ -7,7 +7,7 @@ import filetype
 import os
 import uuid
 
-UPLOAD_FOLDER = 'static/Listado_aviso/Animales_aviso'
+UPLOAD_FOLDER = 'static/Listado_avisos/Animales_aviso'
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
@@ -21,22 +21,19 @@ def inicio():
     avisos = db.get_ultimo_avisos(limit=5)
     return render_template('index.html', avisos=avisos)
 
-@app.route('/form')
-def form():
-    return render_template('form.html')
 
-@app.route('/form', methods=['POST'])
+@app.route('/form', methods=['Get','POST'])
 def agregar_aviso():
     if request.method == "POST":
         nombre = request.form.get("nombre")
         email = request.form.get("email")
         numero = request.form.get("numero")
-        region = request.form.get("region")
+        region = int(request.form.get("region"))
         comuna = request.form.get("comuna")
         sector = request.form.get("sector")
         tipo = request.form.get("tipo")
-        cantidad = request.form.get("cantidad")
-        edad = request.form.get("edad")
+        cantidad = int(request.form.get("cantidad"))
+        edad = int(request.form.get("edad"))
         unidad = request.form.get("unidad")
         fecha = request.form.get("fecha")
         descripcion = request.form.get("descripcion")
@@ -60,7 +57,13 @@ def agregar_aviso():
             "fotos": fotos
         }
         if(validate_form(formulario)):
+            session = db.SessionLocal()
+            if(unidad == "meses"):
+                unidad = "m"
+            else:
+                unidad = "a"
             aviso=db.crear_aviso(comuna, sector, nombre, email, numero, tipo, cantidad, edad, unidad, fecha, descripcion)
+            session.close()
             for f in fotos:
                 if f.filename:
                     filename = secure_filename(f.filename)
@@ -72,7 +75,7 @@ def agregar_aviso():
             return redirect(url_for('inicio'))
         else:
             return render_template('form.html', error="Por favor corrija los campos inválidos.", form=formulario)
-
+    return render_template('form.html')
         
 
 

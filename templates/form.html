@@ -9,8 +9,8 @@
     <div class="main-container">
         <h1>Agregar nuevo aviso de adopción</h1>
 
-        <form name="myForm" method="post" enctype="multipart/form-data" action="{{ url_for('agregar_aviso') }}">
-            <button id="volver">Volver</button>
+        <form name="myForm" method="POST" enctype="multipart/form-data">
+            <button type="button" id="volver">Volver</button>
             <fieldset>
                 <legend>¿Donde?</legend>
 
@@ -22,6 +22,9 @@
                 <label for="comuna">Comuna</label>
                 <select name="comuna" id="comuna" required>
                     <option value="">Seleccione una comuna</option>
+                    {% for c in comunas %}
+                        <option value="{{ c.id }}">{{ c.nombre }}</option>
+                    {% endfor %}
                 </select>
 
                 <label for="sector">Sector</label>

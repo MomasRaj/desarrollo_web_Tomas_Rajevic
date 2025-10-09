@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, Enum, Text, DateTime
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship, joinedload
 from sqlalchemy.sql import func
 from datetime import datetime
 import json
@@ -94,9 +94,17 @@ def get_comunas_by_region(region_id):
 
 def get_ultimo_avisos(limit=5):
     session = SessionLocal()
-    avisos = session.query(AvisoAdopcion).order_by(AvisoAdopcion.fecha_ingreso.desc()).limit(limit).all()
-    session.close()
-    return avisos
+    #pequeño fix usando cosas de metodologias
+    try:
+        avisos = session.query(AvisoAdopcion).join(Comuna).join(Region).options(joinedload(AvisoAdopcion.fotos),joinedload(AvisoAdopcion.comuna).joinedload(Comuna.region)).order_by(AvisoAdopcion.fecha_ingreso.desc()).limit(limit).all()
+        
+        for aviso in avisos:
+            _ = aviso.fotos
+            if aviso.comuna:
+                _ = aviso.comuna.region
+        return avisos
+    finally:
+        session.close()
 
 def get_aviso_by_id(aviso_id):
     session = SessionLocal()
@@ -122,6 +130,7 @@ def crear_aviso(comuna_id, sector, nombre, email, celular, tipo, cantidad, edad,
     )
     session.add(nuevo_aviso)
     session.commit()
+    session.refresh(nuevo_aviso)
     session.close()
     return nuevo_aviso
 
@@ -143,6 +152,13 @@ def get_fotos_por_aviso(aviso_id):
     session.close()
     return fotos
 
+def get_comuna_by_id(comuna_id):
+    session = SessionLocal()
+    try:
+        comuna = session.query(Comuna).filter_by(id=comuna_id).first()
+        return comuna
+    finally:
+        session.close()
 
 def agregar_contacto(aviso_id, nombre, identificador):
     session = SessionLocal()

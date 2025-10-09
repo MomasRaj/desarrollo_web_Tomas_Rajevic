@@ -241,6 +241,5 @@ const validateForm = () => {
 
 
 let submitBtn = document.getElementById("submit-btn").addEventListener("click", (event) => {
-  event.preventDefault(); 
   validateForm();        
 });
