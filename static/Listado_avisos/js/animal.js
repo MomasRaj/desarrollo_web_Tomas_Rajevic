@@ -5,24 +5,24 @@ const animal4Btn = document.getElementById('animal4');
 const animal5Btn = document.getElementById('animal5');
 
 const animal1=()=>{
-  window.location.href = "animal1.html";
+  window.location.href = "../../../templates/Animales/animal1.html";
 };
 
 
 const animal2=()=>{
-  window.location.href = "animal2.html";
+  window.location.href = "../../../templates/Animales/animal2.html";
 };
 
 const animal3=()=>{
-  window.location.href = "animal3.html";
+  window.location.href = "../../../templates/Animales/animal3.html";
 };
 
 const animal4=()=>{
-  window.location.href = "animal4.html";
+  window.location.href = "../../../templates/Animales/animal4.html";
 };
 
 const animal5=()=>{
-  window.location.href = "animal5.html";
+  window.location.href = "../../../templates/Animales/animal5.html";
 };
 
 animal1Btn.addEventListener('click', animal1)

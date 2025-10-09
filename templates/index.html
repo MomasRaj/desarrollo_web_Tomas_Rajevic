@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 	<title>Form Validation</title>
-    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='portada/styles.css') }}">
 </head>
 <body>
     <div class="main-container">
@@ -28,43 +28,43 @@
                 <td>Providencia</td>
                 <td>Los Leones </td> 
                 <td>1 gato 3 meses</td>
-                <td><img src="Animales/sakamoto.jpg" alt="Sakamoto"></td>
+                <td><img src="{{ url_for('static', filename='portada/Animales/sakamoto.jpg') }}" alt="Sakamoto"></td>
             </tr>
             <tr>
                 <td>2025-08-23</td>
                 <td>Lo barnechea</td>
                 <td>Las pataguas</td>
                 <td>1 perro 2 meses</td>
-                <td><img src="Animales/pacifierdog.jpg" alt="dawg"></td>
+                <td><img src="{{ url_for('static', filename='portada/Animales/pacifierdog.jpg') }}" alt="dawg"></td>
             </tr>
             <tr>
                 <td>2025-08-21</td>
                 <td>Santiago</td>
                 <td>La moneda</td>
                 <td>3 perros 1 mes</td>
-                <td><img src="Animales/Cerberus.webp" alt="Cerberus"></td>
+                <td><img src="{{ url_for('static', filename='portada/Animales/Cerberus.webp') }}" alt="Cerberus"></td>
             </tr>
             <tr>
                 <td>2025-08-01</td>
                 <td>Ñuñoa</td>
                 <td>Plaza</td>
                 <td>1 perro 4 meses</td>
-                <td><img src="Animales/Becquerel.webp" alt="Becquerel"></td>
+                <td><img src="{{ url_for('static', filename='portada/Animales/Becquerel.webp') }}" alt="Becquerel"></td>
             </tr>
             <tr>
                 <td>2025-09-01</td>
                 <td>Santiago</td>
                 <td>Santa lucia</td>
                 <td>1 gato 2 meses</td>
-                <td><img src="Animales/vro.jpg" alt=""></td>
+                <td><img src="{{ url_for('static', filename='portada/Animales/vro.jpg') }}" alt=""></td>
             </tr>
         </table> 
         <button id="aviso">Agregar aviso de adopción</button>
         <button id="listado">Ver listado de adopciones</button>
         <button id="estadisticas">Estadisticas</button>
     </div>
-    <script src="./js/aviso.js"></script>
-    <script src="./js/listado.js"></script>
-    <script src="./js/estadisticas.js"></script>
+    <script src="{{ url_for('static', filename='portada/js/aviso.js') }}"></script>
+    <script src="{{ url_for('static', filename='portada/js/listado.js') }}"></script>
+    <script src="{{ url_for('static', filename='portada/js/estadisticas.js') }}"></script>
 </body>
 </html>

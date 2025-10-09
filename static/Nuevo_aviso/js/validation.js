@@ -217,7 +217,7 @@ const validateForm = () => {
       let BtnVolver = document.createElement("button");
       BtnVolver.innerText = "Volver a la portada";
       BtnVolver.addEventListener("click", () => {
-        window.location.href = "../portada/index.html";
+        window.location.href = "/";
       });
       validationListElem.appendChild(BtnVolver);
     });

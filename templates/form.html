@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Nuevo aviso de adopción</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Nuevo_aviso/styles.css') }}">
 </head>
 <body>
     <div class="main-container">
         <h1>Agregar nuevo aviso de adopción</h1>
 
-        <form name="myForm" method="post" enctype="multipart/form-data">
+        <form name="myForm" method="post" enctype="multipart/form-data" action="{{ url_for('agregar_aviso') }}">
             <button id="volver">Volver</button>
             <fieldset>
                 <legend>¿Donde?</legend>
@@ -101,10 +101,10 @@
             <ul id="val-list"></ul>
         </div>
     </div>
-<script src="./js/volver.js"></script>
-<script src="./js/region_comuna.js"></script>
-<script src="./js/validation.js"></script>
-<script src="./js/contacto.js"></script>
-<script src="./js/foto.js"></script>
+<script src="{{ url_for('static', filename='Nuevo_aviso/js/volver.js') }}"></script>
+<script src="{{ url_for('static', filename='Nuevo_aviso/js/region_comuna.js') }}"></script>
+<script src="{{ url_for('static', filename='Nuevo_aviso/js/validation.js') }}"></script>
+<script src="{{ url_for('static', filename='Nuevo_aviso/js/contacto.js') }}"></script>
+<script src="{{ url_for('static', filename='Nuevo_aviso/js/foto.js') }}"></script>
 </body>
 </html>

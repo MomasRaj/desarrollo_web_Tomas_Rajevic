@@ -1,10 +1,12 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, Enum, Text, DateTime
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from sqlalchemy.sql import func
+from datetime import datetime
 import json
 
-DB_NAME = "confessions_db"
-DB_USERNAME = "dbadmin"
-DB_PASSWORD = "dbadmin"
+DB_NAME = "tarea2"
+DB_USERNAME = "cc5002"
+DB_PASSWORD = "programacionweb"
 DB_HOST = "localhost"
 DB_PORT = 3306
 
@@ -17,102 +19,144 @@ Base = declarative_base()
 
 # --- Models ---
 
-class Usuario(Base):
-    __tablename__ = 'usuarios'
+class Region(Base):
+    __tablename__ = 'region'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(200), nullable=False)
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
-    username = Column(String(255), nullable=False)
-    email = Column(String(255), nullable=False)
-    profile_image = Column(String(255), nullable=True)
-    password = Column(String(255), nullable=False)
+    comunas = relationship('Comuna', back_populates='region')
 
-    confesiones = relationship("Confesion", back_populates="usuario", cascade="all, delete")
 
-class Confesion(Base):
-    __tablename__ = 'confesiones'
+class Comuna(Base):
+    __tablename__ = 'comuna'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(200), nullable=False)
+    region_id = Column(Integer, ForeignKey('region.id'), nullable=False)
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
-    conf_title = Column(String(255), nullable=False)
-    conf_text = Column(String(255), nullable=False)
-    conf_img = Column(String(255), nullable=False)
-    user_id = Column(BigInteger, ForeignKey('usuarios.id'), nullable=False)
+    region = relationship('Region', back_populates='comunas')
+    avisos = relationship('AvisoAdopcion', back_populates='comuna')
 
-    usuario = relationship("Usuario", back_populates="confesiones")
+
+class AvisoAdopcion(Base):
+    __tablename__ = 'aviso_adopcion'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    fecha_ingreso = Column(DateTime, nullable=False, server_default=func.now())
+    comuna_id = Column(Integer, ForeignKey('comuna.id'), nullable=False)
+    sector = Column(String(100))
+    nombre = Column(String(200), nullable=False)
+    email = Column(String(100), nullable=False)
+    celular = Column(String(15))
+    tipo = Column(Enum('gato', 'perro'), nullable=False)
+    cantidad = Column(Integer, nullable=False)
+    edad = Column(Integer, nullable=False)
+    unidad_medida = Column(Enum('a', 'm'), nullable=False)  #
+    fecha_entrega = Column(DateTime, nullable=False)
+    descripcion = Column(Text(500))
+
+    comuna = relationship('Comuna', back_populates='avisos')
+    fotos = relationship('Foto', back_populates='aviso', cascade="all, delete-orphan")
+    contactos = relationship('ContactarPor', back_populates='aviso', cascade="all, delete-orphan")
+
+
+class Foto(Base):
+    __tablename__ = 'foto'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    ruta_archivo = Column(String(300), nullable=False)
+    nombre_archivo = Column(String(300), nullable=False)
+    actividad_id = Column(Integer, ForeignKey('aviso_adopcion.id'), nullable=False)
+
+    aviso = relationship('AvisoAdopcion', back_populates='fotos')
+
+
+class ContactarPor(Base):
+    __tablename__ = 'contactar_por'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(Enum('whatsapp', 'telegram', 'X', 'instagram', 'tiktok', 'otra'), nullable=False)
+    identificador = Column(String(150), nullable=False)
+    actividad_id = Column(Integer, ForeignKey('aviso_adopcion.id'), nullable=False)
+
+    aviso = relationship('AvisoAdopcion', back_populates='contactos')
 
 # --- Database Functions ---
 
-def get_user_by_id(id):
+def get_all_regiones():
     session = SessionLocal()
-    user = session.query(Usuario).filter_by(id=id).first()
+    regiones = session.query(Region).all()
     session.close()
-    return user
+    return regiones
 
-def get_user_by_email(email):
+def get_comunas_by_region(region_id):
     session = SessionLocal()
-    user = session.query(Usuario).filter_by(email=email).first()
+    comunas = session.query(Comuna).filter_by(region_id=region_id).all()
     session.close()
-    return user
+    return comunas
 
-def get_user_by_username(username):
+
+def get_ultimo_avisos(limit=5):
     session = SessionLocal()
-    user = session.query(Usuario).filter_by(username=username).first()
+    avisos = session.query(AvisoAdopcion).order_by(AvisoAdopcion.fecha_ingreso.desc()).limit(limit).all()
     session.close()
-    return user
+    return avisos
 
-def create_user(username, password, email):
+def get_aviso_by_id(aviso_id):
     session = SessionLocal()
-    new_user = Usuario(username=username, password=password, email=email)
-    session.add(new_user)
+    aviso = session.query(AvisoAdopcion).filter_by(id=aviso_id).first()
+    session.close()
+    return aviso
+
+def crear_aviso(comuna_id, sector, nombre, email, celular, tipo, cantidad, edad, unidad_medida, fecha_entrega, descripcion):
+    session = SessionLocal()
+    nuevo_aviso = AvisoAdopcion(
+        fecha_ingreso=datetime.now(),
+        comuna_id=comuna_id,
+        sector=sector,
+        nombre=nombre,
+        email=email,
+        celular=celular,
+        tipo=tipo,
+        cantidad=cantidad,
+        edad=edad,
+        unidad_medida=unidad_medida,
+        fecha_entrega=fecha_entrega,
+        descripcion=descripcion
+    )
+    session.add(nuevo_aviso)
+    session.commit()
+    session.close()
+    return nuevo_aviso
+
+
+def agregar_foto(aviso_id, ruta_archivo, nombre_archivo):
+    session = SessionLocal()
+    nueva_foto = Foto(
+        actividad_id=aviso_id,
+        ruta_archivo=ruta_archivo,
+        nombre_archivo=nombre_archivo
+    )
+    session.add(nueva_foto)
     session.commit()
     session.close()
 
-def get_confessions(page_size):
+def get_fotos_por_aviso(aviso_id):
     session = SessionLocal()
-    confesiones = session.query(Confesion).limit(page_size).all()
+    fotos = session.query(Foto).filter_by(actividad_id=aviso_id).all()
     session.close()
-    return confesiones
+    return fotos
 
-def create_confession(conf_title, conf_text, conf_img, user_id):
+
+def agregar_contacto(aviso_id, nombre, identificador):
     session = SessionLocal()
-    new_confession = Confesion(conf_title=conf_title,conf_text=conf_text, conf_img=conf_img, user_id=user_id)
-    session.add(new_confession)
+    contacto = ContactarPor(
+        actividad_id=aviso_id,
+        nombre=nombre,
+        identificador=identificador
+    )
+    session.add(contacto)
     session.commit()
     session.close()
 
-def change_profile_picture(username, new_img):
+def get_contactos_por_aviso(aviso_id):
     session = SessionLocal()
-    user = session.query(Usuario).filter_by(username=username).first()
-    if user:
-        user.profile_image = new_img
-        session.commit()
+    contactos = session.query(ContactarPor).filter_by(actividad_id=aviso_id).all()
     session.close()
-
-def get_profile_picture(username):
-    session = SessionLocal()
-    user = session.query(Usuario).filter_by(username=username).first()
-    if user:
-        profile_image = user.profile_image
-    else:
-        profile_image = None
-    session.close()
-    return profile_image
-
-def register_user(username, password, email):
-    if get_user_by_email(email) is not None:
-        return False, "El correo ya esta en uso."
-    
-    if get_user_by_username(username) is not None:
-        return False, "El nombre de usuario esta en uso."
-    
-    create_user(username, password, email)
-    return True, None
-
-def login_user(username, password):
-    a_user = get_user_by_username(username)
-    if a_user is None:
-        return False, "Usuario o contraseña incorrectos."
-    
-    if a_user.password != password:
-        return False, "Usuario o contraseña incorrectos."
-    
-    return True, None
+    return contactos

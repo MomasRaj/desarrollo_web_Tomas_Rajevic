@@ -1,10 +1,11 @@
 {
-    "get_user_by_id": "SELECT id, username, email, password, profile_img FROM usuarios WHERE id=%s;",
-    "get_user_by_email": "SELECT id, username, email, password, profile_img FROM usuarios WHERE email=%s;",
-    "get_user_by_username": "SELECT id, username, email, password, profile_img FROM usuarios WHERE username=%s;",
-    "create_user": "INSERT INTO usuarios (username, password, email) VALUES (%s, %s, %s);",
-    "change_user_image": "UPDATE usuarios SET profile_img=%s WHERE username=%s;",
-    "get_user_image": "SELECT profile_img FROM usuarios WHERE username=%s",
-    "get_confessions": "SELECT * FROM confesiones ORDER BY id DESC LIMIT %s;",
-    "create_confession": "INSERT INTO confesiones (conf_title, conf_text, conf_img, user_id) VALUES (%s, %s, %s, %s);"
+    "get_all_regiones": "SELECT id, nombre FROM region;",
+    "get_comunas_by_region": "SELECT id, nombre, region_id FROM comuna WHERE region_id=%s;",
+    "get_ultimo_avisos": "SELECT * FROM aviso_adopcion ORDER BY fecha_ingreso DESC LIMIT %s;",
+    "get_aviso_by_id": "SELECT * FROM aviso_adopcion WHERE id=%s;",
+    "crear_aviso": "INSERT INTO aviso_adopcion (fecha_ingreso, comuna_id, sector, nombre, email, celular, tipo, cantidad, edad, unidad_medida, fecha_entrega, descripcion) VALUES (NOW(), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+    "agregar_foto": "INSERT INTO foto (actividad_id, ruta_archivo, nombre_archivo) VALUES (%s, %s, %s);",
+    "get_fotos_por_aviso": "SELECT * FROM foto WHERE actividad_id=%s;",
+    "agregar_contacto": "INSERT INTO contactar_por (actividad_id, nombre, identificador) VALUES (%s, %s, %s);",
+    "get_contactos_por_aviso": "SELECT * FROM contactar_por WHERE actividad_id=%s;"
 }

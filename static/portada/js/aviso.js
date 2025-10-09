@@ -2,6 +2,6 @@
 const avisoBtn = document.getElementById('aviso');
 
 const aviso=()=>{
-  window.location.href = "../Nuevo_aviso/form.html";
+  window.location.href = "/form";
 };
 avisoBtn.addEventListener('click', aviso)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Nuevo aviso de adopción</title>
-    <link rel="stylesheet" type="text/css" href="../css/listado.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Listado_avisos/css/listado.css') }}">
 </head>
 <body>
     <div class="main-container">
@@ -72,8 +72,8 @@
         </table> 
         <button id="volver">Volver</button>
     </div>
-    <script src="../js/volver.js"></script>
-    <script src="../js/ampliar.js"></script>
-    <script src="../js/animal.js"></script>
+    <script src="{{ url_for('static', filename='Listado_avisos/js/volver.js') }}"></script>
+    <script src="{{ url_for('static', filename='Listado_avisos/js/ampliar.js') }}"></script>
+    <script src="{{ url_for('static', filename='Listado_avisos/js/animal.js') }}"></script>
 </body>
 </html>
