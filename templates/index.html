@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+	<title>Form Validation</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='portada/styles.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Bienvenido al Portal de Adopciones</h1>
+            <p>Adopta un amigo</p>
+        </header>
+        <div id="val-box" hidden>
+            <h2 id="val-msg">Mensaje de validación</h2>
+            <ul id="val-list"></ul>
+        </div>
+        <table>
+            <tr>
+                <th>Fecha publicación</th>
+                <th>Comuna</th>
+                <th>Sector</th>
+                <th>Cantidad Tipo Edad</th>
+                <th>Foto</th>
+            </tr>
+            {% for aviso in avisos %}
+            <tr>
+                <td>{{ aviso.fecha_ingreso.strftime('%Y-%m-%d') }}</td>
+                <td>{{ aviso.comuna.nombre }}</td>
+                <td>{{ aviso.sector }}</td>
+                <td>{{ aviso.cantidad }} {{ aviso.tipo }} {{ aviso.edad }} {{ aviso.unidad_medida }}</td>
+                <td>
+                    {% if aviso.fotos %}
+                        {% for foto in aviso.fotos %}
+                            <img src="{{ url_for('static', filename=foto.ruta_archivo+'/'+foto.nombre_archivo) }}" 
+                                alt="{{aviso.nombre}}" 
+                                width="400"
+                                onerror="console.log('Error loading:', this.src)">
+                        {% endfor %}
+                    {% else %}
+                        <p>Sin fotos</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table> 
+        <button id="aviso">Agregar aviso de adopción</button>
+        <button id="listado">Ver listado de adopciones</button>
+        <button id="estadisticas">Estadisticas</button>
+    </div>
+    <script src="{{ url_for('static', filename='portada/js/aviso.js') }}"></script>
+    <script src="{{ url_for('static', filename='portada/js/listado.js') }}"></script>
+    <script src="{{ url_for('static', filename='portada/js/estadisticas.js') }}"></script>
+</body>
+</html>

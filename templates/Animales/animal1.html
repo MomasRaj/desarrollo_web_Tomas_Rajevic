@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle aviso - Spades slick</title>
+  <link rel="stylesheet" type="text/css" href="../css/img.css">
+</head>
+<body>
+  <h1>Detalle del aviso de adopción</h1>
+  <p><strong>Fecha publicación:</strong> 2025-09-03</p>
+  <p><strong>Fecha entrega:</strong> 2025-09-10</p>
+  <p><strong>Comuna:</strong> Providencia</p>
+  <p><strong>Sector:</strong> Los Leones</p>
+  <p><strong>Mascotas:</strong> 1 gato, 3 meses</p>
+  <p><strong>Nombre contacto:</strong> Angelica</p>
+  <p><strong>Email:</strong> Angelica@email.com</p>
+
+  <h2>Fotos</h2>
+  <img src="../Animales_aviso/animal1/sakamoto.jpg" class="foto-mini" alt="Sakamoto" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal1/sakamotocaja.webp" class="foto-mini" alt="Sakamoto en caja" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal1/sakamotosleep.jpg" class="foto-mini" alt="Sakamoto durmiendo" onclick="ampliar(this)">
+
+  <div id="overlay">
+    <img src="../Animales_aviso/animal1/sakamoto.jpg" alt="Foto ampliada">
+    <button onclick="cerrar()">Cerrar</button>
+  </div>
+
+  <div>
+    <button id="listado">Volver al listado</button>
+    <button id="volver">Volver a la portada</button>
+  </div>
+<script src="../js/listadoVolver.js"></script>
+<script src="../js/volver.js"></script>
+<script src="../js/ampliar.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle aviso - Vergilius</title>
+  <link rel="stylesheet" type="text/css" href="../css/img.css">
+</head>
+<body>
+  <h1>Detalle del aviso de adopción</h1>
+  <p><strong>Fecha publicación:</strong> 2025-08-23</p>
+  <p><strong>Fecha entrega:</strong> 2025-08-30</p>
+  <p><strong>Comuna:</strong> Lo Barnechea</p>
+  <p><strong>Sector:</strong> Las Pataguas</p>
+  <p><strong>Mascotas:</strong> 1 perro, 2 meses</p>
+  <p><strong>Nombre contacto:</strong> Vergilius</p>
+  <p><strong>Email:</strong> Vergilius@dcc.uchile.cl</p>
+
+  <h2>Fotos</h2>
+  <img src="../Animales_aviso/animal2/pacifierdog.jpg" class="foto-mini" alt="Pacifier Dog" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal2/pacifierdog.jpg" class="foto-mini" alt="Pacifier Dog" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal2/pacifierdog.jpg" class="foto-mini" alt="Pacifier Dog" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal2/pacifierdog.jpg" class="foto-mini" alt="Pacifier Dog" onclick="ampliar(this)">
+  <img src="../Animales_aviso/animal2/pacifierdog.jpg" class="foto-mini" alt="Pacifier Dog" onclick="ampliar(this)">
+
+  <div id="overlay">
+    <img src="../Animales_aviso/animal2/pacifierdog.jpg" alt="Foto ampliada">
+    <button onclick="cerrar()">Cerrar</button>
+  </div>
+
+  <div>
+    <button id="listado">Volver al listado</button>
+    <button id="volver">Volver a la portada</button>
+  </div>
+<script src="../js/listadoVolver.js"></script>
+<script src="../js/volver.js"></script>
+<script src="../js/ampliar.js"></script>
+</body>
+</html>

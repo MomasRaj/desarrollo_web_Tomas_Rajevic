@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo aviso de adopción</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Estadisticas/estadisticas.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <img src="{{ url_for('static', filename='Estadisticas/graficos/Lineas.png') }}" alt="">
+        <img src="{{ url_for('static', filename='Estadisticas/graficos/torta.png') }}" alt="">
+        <img src="{{ url_for('static', filename='Estadisticas/graficos/barra.png') }}" alt="">
+        <button id="volver">Volver</button>
+    </div>
+    <script src="{{ url_for('static', filename='Nuevo_aviso/js/volver.js') }}"></script>
+</body>
+</html>
