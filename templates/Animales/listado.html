@@ -6,71 +6,49 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Listado_avisos/css/listado.css') }}">
 </head>
 <body>
-    <div class="main-container">
-
-        <table>
+<div class="avisos-table-container">
+    <table class="avisos-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Edad</th>
+            <th>Comuna</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for a in avisos %}
             <tr>
-                <th>Fecha Publicación</th>
-                <th>Fecha Entrega</th>
-                <th>Comuna</th>
-                <th>Sector</th>
-                <th>Cantidad Tipo Edad</th>
-                <th>Nombre</th>
-                <th>Contacto</th>
-                <th>Total Fotos</th>
+            <td>{{ a.id }}</td>
+            <td style="width:120px; text-align:center;">
+                {% if a.foto %}
+                <img alt="{{ a.nombre }}" style="max-height:80px; max-width:100px; object-fit:cover;"
+                    src="{{ url_for('static', filename=a.foto.replace('static/','')) }}">
+                {% else %}
+                <span style="color:#888; font-size:12px;">sin foto</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('aviso_detail', aid=a.id) }}">{{ a.nombre }}</a>
+            </td>
+            <td>{{ a.tipo }}</td>
+            <td style="text-align:center;">{{ a.cantidad }}</td>
+            <td style="text-align:center;">{{ a.edad }} {{ a.unidad }}</td>
+            <td>{{ a.comuna or '-' }}</td>
+            <td>{{ a.fecha }}</td>
+            <td style="max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ a.descripcion or '-' }}</td>
             </tr>
-            <tr id="animal1" style="cursor:pointer;">
-                <td>2025-09-03</td>
-                <td>2025-09-10</td>
-                <td>Providencia</td>
-                <td>Los Leones</td>
-                <td>1 gato 3 meses</td>
-                <td>Angelica</td>
-                <td>Angelica@email.com</td>
-                <td>3</td>
-            </tr>
-            <tr id="animal2" style="cursor:pointer;">
-                <td>2025-08-23</td>
-                <td>2025-08-30</td>
-                <td>Lo Barnechea</td>
-                <td>Las Pataguas</td>
-                <td>1 perro 2 meses</td>
-                <td>Vergilius</td>
-                <td>Vergilius@dcc.uchile.cl</td>
-                <td>5</td>
-            </tr>
-            <tr id="animal3" style="cursor:pointer;">
-                <td>2025-08-21</td>
-                <td>2025-08-28</td>
-                <td>Santiago</td>
-                <td>La Moneda</td>
-                <td>3 perros 1 mes</td>
-                <td>Netzach</td>
-                <td>Netzach@gmail.com</td>
-                <td>4</td>
-            </tr>
-            <tr id="animal4" style="cursor:pointer;">
-                <td>2025-08-01</td>
-                <td>2025-08-05</td>
-                <td>Ñuñoa</td>
-                <td>Plaza</td>
-                <td>1 perro 4 meses</td>
-                <td>Spades Slick</td>
-                <td>SpadeSlick@hotmail.com</td>
-                <td>2</td>
-            </tr>
-            <tr id="animal5" style="cursor:pointer;">
-                <td>2025-09-01</td>
-                <td>2025-09-07</td>
-                <td>Santiago</td>
-                <td>Santa Lucía</td>
-                <td>1 gato 2 meses</td>
-                <td>Roland</td>
-                <td>roland@gmail.com</td>
-                <td>3</td>
-            </tr>
-        </table> 
-        <button id="volver">Volver</button>
+        {% else %}
+            <tr><td colspan="9" style="text-align:center; padding:16px;">No hay avisos para mostrar.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <button id="volver">Volver a la portada</button>
     </div>
     <script src="{{ url_for('static', filename='Listado_avisos/js/volver.js') }}"></script>
     <script src="{{ url_for('static', filename='Listado_avisos/js/ampliar.js') }}"></script>

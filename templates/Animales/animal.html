@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle aviso - Spades slick</title>
+  <link rel="stylesheet" type="text/css" href="../css/img.css">
+</head>
+<body>
+  <table>
+    <tr>
+      <td>{{ aviso.get('fecha') or '' }}</td>
+      <td>{{ aviso.get('comuna') or '' }}</td>
+      <td>{{ aviso.get('sector') or '' }}</td>
+      <td>
+      {{ aviso.get('cantidad') or '' }}
+      {{ aviso.get('tipo') or '' }}
+      {{ aviso.get('edad') or '' }}
+      {{ aviso.get('unidad_medida') or '' }}
+      </td>
+      <td>
+      {% for foto in aviso.get('fotos') %}
+        {% if foto %}
+            {% if 'static/' in foto %}
+              <img src="{{ url_for('static', filename=foto.split('static/',1)[1]) }}" alt="{{ aviso.get('nombre','') }}" style="max-height:80px;">
+            {% else %}
+              <img src="{{ foto }}" alt="{{ aviso.get('nombre','') }}" style="max-height:80px;">
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+      </td>
+    </tr>
+  </table>
+  <form name="Comentario" method="POST" enctype="multipart/form-data" style="margin-top:12px;">
+    <fieldset>
+    <label for="nombre">Nombre:</label>
+      <input type="text" name="nombre" id="nombre" minlength="5" maxlength="80" required>
+    </fieldset>
+    <fieldset>
+      <label>Nuevo comentario:</label>
+      <textarea name="comentario_box" id="comentario_box" rows="4" cols="50" minlength="5"></textarea>
+    </fieldset>
+  </form>
+  <div id="val-box" hidden>
+      <div id="val-msg"></div>
+      <ul id="val-list"></ul>
+  </div>
+    <button type="button" id="submit-btn" onclick="validateComment_form({{aviso.get('id')}})">Enviar comentario</button>
+    <button type="button" id="listado">Volver al listado</button>
+    <button type="button" id="volver">Volver a la portada</button>
+  
+  <div id="comments-placeholder">
+    {% if comentarios and comentarios|length > 0 %}
+      <div class="comments-list">
+        {% for c in comentarios %}
+          <div class="comment-item">
+            <div class="comment-header"><strong>{{ c.nombre }}</strong> <span class="comment-date">{{ c.fecha }}</span></div>
+            <div class="comment-body">{{ c.texto }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No hay comentarios aún.</p>
+    {% endif %}
+  </div>
+  <script src="{{ url_for('static', filename='Listado_avisos/js/listadoVolver.js') }}"></script>
+  <script src="{{ url_for('static', filename='Listado_avisos/js/volver.js') }}"></script>
+  <script src="{{ url_for('static', filename='Listado_avisos/js/ampliar.js') }}"></script>
+  <script src="{{ url_for('static', filename='Listado_avisos/js/comment.js') }}"></script>
+</body>
+</html>

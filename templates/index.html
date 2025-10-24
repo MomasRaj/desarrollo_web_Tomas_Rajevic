@@ -16,34 +16,38 @@
             <ul id="val-list"></ul>
         </div>
         <table>
-            <tr>
-                <th>Fecha publicación</th>
-                <th>Comuna</th>
-                <th>Sector</th>
-                <th>Cantidad Tipo Edad</th>
-                <th>Foto</th>
-            </tr>
-            {% for aviso in avisos %}
-            <tr>
-                <td>{{ aviso.fecha_ingreso.strftime('%Y-%m-%d') }}</td>
-                <td>{{ aviso.comuna.nombre }}</td>
-                <td>{{ aviso.sector }}</td>
-                <td>{{ aviso.cantidad }} {{ aviso.tipo }} {{ aviso.edad }} {{ aviso.unidad_medida }}</td>
-                <td>
-                    {% if aviso.fotos %}
-                        {% for foto in aviso.fotos %}
-                            <img src="{{ url_for('static', filename=foto.ruta_archivo+'/'+foto.nombre_archivo) }}" 
-                                alt="{{aviso.nombre}}" 
-                                width="400"
-                                onerror="console.log('Error loading:', this.src)">
-                        {% endfor %}
-                    {% else %}
-                        <p>Sin fotos</p>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </table> 
+        <tr>
+            <th>Fecha publicación</th>
+            <th>Comuna</th>
+            <th>Sector</th>
+            <th>Cantidad Tipo Edad</th>
+            <th>Foto</th>
+        </tr>
+        {% for aviso in avisos %}
+        <tr>
+            <td>{{ aviso.get('fecha') or '' }}</td>
+            <td>{{ aviso.get('comuna') or '' }}</td>
+            <td>{{ aviso.get('sector') or '' }}</td>
+            <td>
+            {{ aviso.get('cantidad') or '' }}
+            {{ aviso.get('tipo') or '' }}
+            {{ aviso.get('edad') or '' }}
+            {{ aviso.get('unidad_medida') or '' }}
+            </td>
+            <td>
+            {% if aviso.get('foto') %}
+                {% if 'static/' in aviso.get('foto') %}
+                <img src="{{ url_for('static', filename=aviso.get('foto').split('static/',1)[1]) }}" alt="{{ aviso.get('nombre','') }}" style="max-height:80px;">
+                {% else %}
+                <img src="{{ aviso.get('foto') }}" alt="{{ aviso.get('nombre','') }}" style="max-height:80px;">
+                {% endif %}
+            {% else %}
+                <span style="color:#999;">sin foto</span>
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table> 
         <button id="aviso">Agregar aviso de adopción</button>
         <button id="listado">Ver listado de adopciones</button>
         <button id="estadisticas">Estadisticas</button>

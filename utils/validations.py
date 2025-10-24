@@ -143,3 +143,17 @@ def validate_form(form):
         is_valid = False
 
     return is_valid
+
+# -----------Tarea3------------
+def validate_nombre(nombre):
+    if not nombre:
+        return False
+    length_valid = len(nombre.strip()) >= 3 and len(nombre.strip()) <= 80
+    return length_valid
+
+def validate_coment(comment):
+    if not comment:
+        return False
+    length_valid = len(comment.strip()) >= 5
+    return length_valid
+

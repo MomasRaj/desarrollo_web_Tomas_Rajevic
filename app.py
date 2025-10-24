@@ -1,11 +1,16 @@
-from flask import Flask, request, render_template, redirect, url_for, session
-from utils.validations import validate_form
+from flask import Flask, jsonify, request, render_template, redirect, url_for, session
+from utils.validations import validate_form, validate_nombre, validate_coment
 from database import db
 from werkzeug.utils import secure_filename
 import hashlib
 import filetype
 import os
 import uuid
+import random
+from datetime import datetime, timedelta
+import time
+from flask_cors import cross_origin
+from jinja2 import TemplateNotFound
 
 UPLOAD_FOLDER = 'static/Listado_avisos/Animales_aviso'
 
@@ -83,11 +88,93 @@ def agregar_aviso():
 
 @app.route('/list')
 def list():
-    return render_template('Animales/listado.html')
+    session = None
+    try:
+        try:
+            page = int(request.args.get("page", 1))
+        except Exception:
+            page = 1
+        per_page = 5
+        if page < 1:
+            page = 1
+        offset = (page - 1) * per_page
 
-@app.route('/stats')
+        total = db.count_avisos()
+        total_pages = max(1, (int(total) + per_page - 1) // per_page)
+
+        avisos = db.get_avisos_paginated(limit=per_page, offset=offset)
+
+        return render_template(
+            'Animales/listado.html',
+            avisos=avisos,
+            page=page,
+            total_pages=total_pages,
+            per_page=per_page,
+            total=total
+        )
+    except Exception as e:
+        print("list error:", e)
+        return render_template('Animales/listado.html', avisos=[])
+    finally:
+        if session:
+            session.close()
+
+
+@app.route('/aviso/<int:aid>')
+def aviso_detail(aid):
+    aviso = db.get_aviso_detail_dict(aid)
+    comentarios = db.get_comentarios_por_aviso(aid)
+    return render_template('Animales/animal.html', aviso=aviso, comentarios=comentarios)
+
+
+@app.route('/aviso/<int:aid>/comentarios', methods=['GET', 'POST'])
+def aviso_comentarios(aid):
+    if request.method == 'GET':
+        rows = db.get_comentarios_por_aviso(aid)
+        return jsonify(rows), 200
+    if request.method == "POST":
+        data = request.get_json() or {}
+        nombre = data.get("nombre")
+        comentario = data.get("comentario_box")
+        if validate_nombre(nombre) and validate_coment(comentario):
+            db.add_comment_to_aviso(aid, nombre, comentario)
+        else:
+            error = "Por favor corrija los campos inválidos."
+            aviso = db.get_aviso_detail_dict(aid)
+            return render_template('Animales/animal.html', aviso=aviso, error=error)
+    return redirect(url_for('aviso_detail', aid=aid))
+
+
+@app.route('/stats', methods=["GET"])
 def stats():
     return render_template('estadisticas.html')
+
+
+
+@app.route("/get-stats-data", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_stats_data():
+    data = db.get_stats_data_from_db()
+    if data:
+        return jsonify(data)
+
+
+@app.route("/get-stats-type", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_stats_type():
+    rows = db.get_stats_type_from_db()
+    data = [{"type": r["type"], "count": int(r["count"])} for r in rows] if rows else []
+    if data:
+        return jsonify(data)
+
+
+
+@app.route("/get-stats-monthly-type", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_stats_monthly_type():
+    data = db.get_stats_monthly_type_from_db()
+    if data:
+        return jsonify(data)
 
 if __name__ == "__main__":
     app.run(debug=True)
