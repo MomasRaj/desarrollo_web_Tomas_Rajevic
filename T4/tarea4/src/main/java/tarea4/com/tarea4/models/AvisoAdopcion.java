@@ -48,14 +48,7 @@ public class AvisoAdopcion {
     @Column(length = 500)
     private String descripcion;
 
-    @OneToMany(mappedBy = "aviso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Foto> fotos;
 
-    @OneToMany(mappedBy = "aviso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ContactarPor> contactos;
-
-    @OneToMany(mappedBy = "aviso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Comentario> comentarios;
 
     @OneToMany(mappedBy = "aviso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Nota> notas;
@@ -125,18 +118,6 @@ public class AvisoAdopcion {
 
     public String getDescripcion() {
         return descripcion;
-    }
-
-    public List<Foto> getFotos() {
-        return fotos;
-    }
-
-    public List<ContactarPor> getContactos() {
-        return contactos;
-    }
-
-    public List<Comentario> getComentarios() {
-        return comentarios;
     }
 
     public List<Nota> getNotas() {

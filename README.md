@@ -5,11 +5,9 @@ Esta es mi tercera de desarrollo web.
 
 
 ## Decisiones ##
-Sobre decisiones de diseño intente de seguir con lo que tenia de la tarea 2, se elimino los html de animales y se transformo en un solo template de manera que se pudiera comunicar correctamente con la base de datos. 
+Ehhh ya, miren la verdad pense cual era la forma mas facil de poner un entero del 1 al 7 y luego me acorde de los sliders que hay en google play o otras cosas para rating, asi que en verdad las validaciones estan unicamente para que alguien que modifica el html no haga cosas chistosas (como no se especifico de que manera se podia poner el input asumi que podia hacer esto). Lo otro, la tarea esta en la carpeta designada como T4, decidi usar el template del listado que ya a para la tarea 3, este cumple las funciones pedidas para esta tarea y si se añaden cosas a la base de datos(usando la aplicacion de la tarea 3) se deberia poder añadir nuevos datos.
 
-Para esta tarea me concentre en lograr implementar lo pedido, por eso es que esta lo minimo necesario de la tarea 2 relacionado con la lista para que los comentarios funcionaran. Por esto es que no hay paginas para ver mas anuncios y tampoco se puede agrandar una foto.
-
-Y tambien mando el venv para que no hayan problemas. (Es la carpeta que esta como web)
+Eso, la verdad no hay mucho mas que decir por el largo de la tarea.
 
 Mish. 
 
