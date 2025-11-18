@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de avisos de adopción</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/listado.css}">
+</head>
+<body>
+<div class="avisos-table-container">
+    <table class="avisos-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha publicacion</th>
+            <th>Sector</th>
+            <th>Cantidad Tipo </br> Edad </th>
+            <th>Comuna</th>
+            <th>Nota</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${avisos}">
+            <td th:text="${a.id}">1</td>
+            <td th:text="${#temporals.format(a.fechaIngreso, 'dd/MM/yyyy')}">Fecha</td>
+            <td th:text="${a.sector}">Sector</td>
+            <td th:text="${a.cantidad} + ' ' + ${a.tipo} + ' ' + ${a.edad} + ' ' + ${a.unidadMedida}">0</td>
+            <td th:text="${a.comuna.nombre}">Comuna</td>
+            <td style="max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                <h2 th:if="${a.promedioNotas != null}" th:text="${#numbers.formatDecimal(a.promedioNotas, 1, 2)}">0.00</h2>
+                <h2 th:if="${a.promedioNotas == null}">-</h2>
+            </td>
+            <td>
+                <button class="evaluar-btn" th:attr="data-aviso-id=${a.id}">Evaluar</button>
+                <div class="slidecontainer" th:attr="data-aviso-id=${a.id}" style="display:none;">
+                    <input type="range" min="1" max="7" value="1" class="slider" th:attr="id='notaRange-' + ${a.id}, data-aviso-id=${a.id}">
+                    <span th:attr="id='notaValue-' + ${a.id}">1</span>
+                    <button class="enviar-nota-btn" th:attr="data-aviso-id=${a.id}">Enviar</button>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <button id="volver">Volver a la portada</button>
+</div>
+<script th:src="@{/js/listadoVolver.js}"></script>
+<script th:src="@{/js/ampliar.js}"></script>
+<script th:src="@{/js/nota.js}"></script>
+</body>
+</html>
