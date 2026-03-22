@@ -3,7 +3,6 @@
 Esta es mi tercera de desarrollo web.
 
 
-
 ## Decisiones ##
 Sobre decisiones de diseño intente de seguir con lo que tenia de la tarea 2, se elimino los html de animales y se transformo en un solo template de manera que se pudiera comunicar correctamente con la base de datos. 
 
